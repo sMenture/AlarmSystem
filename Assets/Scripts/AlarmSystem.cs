@@ -1,12 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class AlarmSystem : MonoBehaviour
 {
+    private const float MinimumValue = 0.01f;
+
     [SerializeField] private float _fadeSpeed = 0.5f;
 
     private AudioSource _audioSource;
-    private bool _isEnabled = false;
+    private Coroutine _fadeCoroutine;
 
     private void Awake()
     {
@@ -15,41 +18,34 @@ public class AlarmSystem : MonoBehaviour
         _audioSource.loop = true;
     }
 
-    private void Update()
+    public void StartFade(bool isEnable)
     {
-        const float MinimumValue = 0.01f;
+        if (_fadeCoroutine != null)
+            StopCoroutine(_fadeCoroutine);
 
-        float targetVolume = _isEnabled ? 1 : 0f;
-        _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _fadeSpeed * Time.deltaTime);
+        _fadeCoroutine = StartCoroutine(FadeVolume(isEnable ? 1 : 0));
+    }
 
-        if (_isEnabled && _audioSource.isPlaying == false && _audioSource.volume > MinimumValue)
+    private IEnumerator FadeVolume(float targetVolume)
+    {
+        if (targetVolume > MinimumValue && !_audioSource.isPlaying)
         {
             _audioSource.Play();
         }
-        else if (!_isEnabled && _audioSource.isPlaying && _audioSource.volume < MinimumValue)
+
+        while (!Mathf.Approximately(_audioSource.volume, targetVolume))
+        {
+            _audioSource.volume = Mathf.MoveTowards(
+                _audioSource.volume,
+                targetVolume,
+                _fadeSpeed * Time.deltaTime
+            );
+            yield return null;
+        }
+
+        if (targetVolume < MinimumValue && _audioSource.isPlaying)
         {
             _audioSource.Stop();
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (IsThief(other))
-        {
-            _isEnabled = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (IsThief(other))
-        {
-            _isEnabled = false;
-        }
-    }
-
-    private bool IsThief(Collider other)
-    {
-        return other.TryGetComponent(out Thief thief);
     }
 }
