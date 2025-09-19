@@ -236,9 +236,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 29869138}
-  - component: {fileID: 29869137}
   - component: {fileID: 29869136}
   - component: {fileID: 29869139}
+  - component: {fileID: 29869141}
+  - component: {fileID: 29869140}
+  - component: {fileID: 29869137}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -399,6 +401,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &29869140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29869135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f17a88f430c804cb62ac7a3071da0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &29869141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29869135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50bbe77f04e52aa45bf8e321fbf156d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inAndOut: {fileID: 29869140}
+  _alarmSystem: {fileID: 29869137}
 --- !u!1 &157207112
 GameObject:
   m_ObjectHideFlags: 0
