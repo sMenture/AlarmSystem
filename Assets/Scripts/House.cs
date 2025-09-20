@@ -7,13 +7,23 @@ public class House : MonoBehaviour
 
     private void OnEnable()
     {
-        _inAndOut.IntrusionDetected += () => _alarmSystem.StartFade(true);
-        _inAndOut.IntrusionEnded += () => _alarmSystem.StartFade(false);
+        _inAndOut.IntrusionDetected += IntrusionDetected;
+        _inAndOut.IntrusionEnded += IntrusionEnded;
     }
 
     private void OnDisable()
     {
-        _inAndOut.IntrusionDetected -= () => _alarmSystem.StartFade(true);
-        _inAndOut.IntrusionEnded -= () => _alarmSystem.StartFade(false);
+        _inAndOut.IntrusionDetected -= IntrusionDetected;
+        _inAndOut.IntrusionEnded -= IntrusionEnded;
+    }
+
+    private void IntrusionDetected()
+    {
+        _alarmSystem.StartFade(true);
+    }
+
+    private void IntrusionEnded()
+    {
+        _alarmSystem.StartFade(false);
     }
 }

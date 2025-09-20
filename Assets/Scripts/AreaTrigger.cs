@@ -8,14 +8,16 @@ public class AreaTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (IsThief(other) == false) return;
+        if (IsThief(other) == false)
+            return;
 
         IntrusionDetected?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (IsThief(other) == false) return;
+        if (IsThief(other) == false)
+            return;
 
         IntrusionEnded?.Invoke();
     }
